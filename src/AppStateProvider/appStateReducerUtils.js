@@ -23,12 +23,16 @@ const goToPrevPage = (state) => {
     };
 };
 
-const goToNextPage = (state) => {
+const goToNextPage = (state, action) => {
+    const { isFetching } = action?.payload;
     const { validUsers, listPageSize, prefetchThreshold } = state;
     const next = state.validUsersPageNum + 1;
     const validUsersPageNum = next;
     const nextPageStart = listPageSize * validUsersPageNum;
-    const apiPageNum = nextPageStart > validUsers.length - prefetchThreshold
+    const apiPageNum = (
+        nextPageStart > validUsers.length - prefetchThreshold
+        && !isFetching
+    )
         ? state.apiPageNum + 1
         : state.apiPageNum;
     return {

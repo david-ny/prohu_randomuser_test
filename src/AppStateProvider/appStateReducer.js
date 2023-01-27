@@ -4,7 +4,7 @@ export default function appStateReducer(state, action) {
     switch (action.type) {
         case 'addUsers': return addUsers(state, action);
         case 'goToPrevPage': return goToPrevPage(state);
-        case 'goToNextPage': return goToNextPage(state);
+        case 'goToNextPage': return goToNextPage(state, action);
         default:
             throw new Error(`appStateReducer - unknown action: ${action?.type}`);
     }

@@ -16,8 +16,6 @@ function App() {
   const validUsersPageNum = useContextSelector(appStateContext, (v) => v.appState.validUsersPageNum);
   const apiResultsLength = useContextSelector(appStateContext, (v) => v.appState.apiResultsLength);
 
-  const goToPrevPage = () => appStateDispatch({ type: 'goToPrevPage' });
-  const goToNextPage = () => appStateDispatch({ type: "goToNextPage" });
   const addUsers = (resp) => {
     appStateDispatch({
       type: "addUsers",
@@ -26,6 +24,13 @@ function App() {
   };
 
   const { status, isFetching, error } = useAPI(apiPageNum, apiPageSize, addUsers);
+
+  const goToPrevPage = () => appStateDispatch({ type: "goToPrevPage" });
+  const goToNextPage = () =>
+    appStateDispatch({
+      type: "goToNextPage",
+      payload: { isFetching },
+    });
 
   if (status === "error") {
     return <h1>{JSON.stringify(error)}</h1>;
